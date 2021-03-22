@@ -4,13 +4,51 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="../style.css" />
   </head>
   <body>
     <nav>
       <ul>
-        <li>View Highscores</li>
+        <li><a href="./highscore.html">View Highscores</a></li>
         <li>Time: <span class="time-display"></span></li>
       </ul>
     </nav>
+    <main>
+      <p>Which of the following is not a truthy value</p>
+      <form>
+        <input
+          type="radio"
+          name="truthy-value"
+          value="10"
+          id="option-1"
+          class="hidden radio"
+        />
+        <label for="option-1" class="label"> 1. 10</label>
+        <input
+          type="radio"
+          name="truthy-value"
+          value="empty-string"
+          id="option-2"
+          class="hidden radio"
+        />
+        <label for="option-2" class="label"> 2. ""</label>
+        <input
+          type="radio"
+          name="truthy-value"
+          value="true"
+          id="option-3"
+          class="hidden radio"
+        />
+        <label for="option-3" class="label"> 3. true</label>
+        <input
+          type="radio"
+          name="truthy-value"
+          value="string"
+          id="option-4"
+          class="hidden radio"
+        />
+        <label for="option-4" class="label"> 4. "string"</label>
+      </form>
+    </main>
   </body>
 </html>
