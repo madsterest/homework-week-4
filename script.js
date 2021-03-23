@@ -1,14 +1,12 @@
 var startButton = document.querySelector(".start");
 var questionDisplay = document.querySelector("p");
 var listEl = document.querySelector(".question-list");
+var timeDisplay = document.querySelector(".time-display");
+var scoreInput = document.querySelector("form");
+var score = 0;
+var time = 60;
+var index = 0;
 
-function init() {
-  index = 0;
-}
-
-// startButton.addEventListener("click", function () {
-
-//When start the timer is set, the button hidden and li elements are created
 var questionLi1 = document.createElement("li");
 listEl.appendChild(questionLi1);
 var questionLi2 = document.createElement("li");
@@ -17,9 +15,7 @@ var questionLi3 = document.createElement("li");
 listEl.appendChild(questionLi3);
 var questionLi4 = document.createElement("li");
 listEl.appendChild(questionLi4);
-
-// startButton.setAttribute("hidden");
-// });
+listEl.setAttribute("class", "hidden");
 
 var questionObj = [
   {
@@ -42,23 +38,52 @@ var questionObj = [
     questions: ["answer3.1", "answer3.2", "answer3.3", "answer3.4"],
     answer: "answer3.2",
   },
+  {
+    name: "This is the fourth question",
+    questions: ["answer4.1", "answer4.2", "answer4.3", "answer4.4"],
+    answer: "answer3.2",
+  },
+  {
+    name: "This is the Fifth question",
+    questions: ["answer5.1", "answer5.2", "answer5.3", "answer5.4"],
+    answer: "answer3.2",
+  },
 ];
-var index = 0;
-function generateDisplay(index) {
-  questionDisplay.innerHTML = questionObj[index].name;
-  questionLi1.innerHTML = questionObj[index].questions[0];
-  questionLi2.innerHTML = questionObj[index].questions[1];
-  questionLi3.innerHTML = questionObj[index].questions[2];
-  questionLi4.innerHTML = questionObj[index].questions[3];
+
+function init() {
+  index = 0;
+  questionDisplay.innerHTML =
+    "Here is the quiz for how good you are at things. Click the button to start the quiz";
 }
-var answer = questionObj[index].answer;
-generateDisplay(index);
+function startTimer() {
+  startButton.setAttribute("class", "hidden");
+  listEl.removeAttribute("class", "hidden");
+  generateDisplay(index);
+  var timer = setInterval(function () {
+    if (time > 0) {
+      time--;
+      timeDisplay.textContent = time;
+    } else {
+      clearInterval(timer);
+      testOver();
+    }
+    if (index > 3) {
+      clearInterval(timer);
+      testOver();
+      return;
+    }
+  }, 1000);
+}
+
+startButton.addEventListener("click", startTimer);
 
 listEl.addEventListener("click", function (event) {
   var userChoice = event.target.innerHTML;
-  if (index > 2) {
+  if (index > 3) {
+    testOver();
     return;
-  } else if (userChoice === answer) {
+  }
+  if (userChoice === answer) {
     console.log("YAY");
     index++;
     generateDisplay(index);
@@ -69,20 +94,20 @@ listEl.addEventListener("click", function (event) {
   }
 });
 
-// for (var i = 0; i < questionObj.length; i++) {
-//   questionDisplay.innerHTML = questionObj[i].name;
-//   questionLi1.innerHTML = questionObj[i].questions[0];
-//   questionLi2.innerHTML = questionObj[i].questions[1];
-//   questionLi3.innerHTML = questionObj[i].questions[2];
-//   questionLi4.innerHTML = questionObj[i].questions[3];
-//   var answer = questionObj[i].answer;
+function generateDisplay(index) {
+  questionDisplay.innerHTML = questionObj[index].name;
+  questionLi1.innerHTML = questionObj[index].questions[0];
+  questionLi2.innerHTML = questionObj[index].questions[1];
+  questionLi3.innerHTML = questionObj[index].questions[2];
+  questionLi4.innerHTML = questionObj[index].questions[3];
+}
+var answer = questionObj[index].answer;
 
-//   listEl.addEventListener("click", function (event) {
-//     var userChoice = event.target;
-//     if (userChoice === answer) {
-//       console.log("YAY");
-//     } else {
-//       console.log("NOPE");
-//     }
-//   });
-// }
+function testOver() {
+  score = time;
+  timeDisplay.textContent = score;
+  listEl.setAttribute("class", "hidden");
+  questionDisplay.setAttribute("class", "hidden");
+  scoreInput.removeAttribute("class", "hidden");
+}
+init();
