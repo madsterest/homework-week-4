@@ -3,6 +3,9 @@ var questionDisplay = document.querySelector("p");
 var listEl = document.querySelector(".question-list");
 var timeDisplay = document.querySelector(".time-display");
 var scoreInput = document.querySelector("form");
+var initials = document.getElementById("initials");
+var saveButton = document.getElementById("save");
+var answerDisplay = document.getElementById("answer-display");
 var score = 0;
 var time = 60;
 var index = 0;
@@ -67,7 +70,7 @@ function startTimer() {
       clearInterval(timer);
       testOver();
     }
-    if (index > 3) {
+    if (index >= 5) {
       clearInterval(timer);
       testOver();
       return;
@@ -79,18 +82,27 @@ startButton.addEventListener("click", startTimer);
 
 listEl.addEventListener("click", function (event) {
   var userChoice = event.target.innerHTML;
-  if (index > 3) {
-    testOver();
-    return;
-  }
-  if (userChoice === answer) {
+
+  if (userChoice === answer && index <= 3) {
     console.log("YAY");
+    answerDisplay.innerHTML = "Correct";
     index++;
     generateDisplay(index);
-  } else {
+  } else if (userChoice !== answer && index <= 3) {
     console.log("NOPE");
+    answerDisplay.innerHTML = "Wrong Answer";
+    time = time - 5;
     index++;
     generateDisplay(index);
+  } else if (userChoice === answer && index >= 4) {
+    console.log("YAY");
+    answerDisplay.innerHTML = "Correct";
+    index++;
+  } else if (userChoice !== answer && index >= 4) {
+    console.log("NOPE");
+    answerDisplay.innerHTML = "Wrong Answer";
+    time = time - 5;
+    index++;
   }
 });
 
@@ -109,5 +121,17 @@ function testOver() {
   listEl.setAttribute("class", "hidden");
   questionDisplay.setAttribute("class", "hidden");
   scoreInput.removeAttribute("class", "hidden");
+  console.log(score);
 }
+saveButton.addEventListener("click", function (event) {
+  event.preventDefault();
+
+  var finalScore = {
+    initials: initials.value.trim(),
+    finalScore: score,
+  };
+  localStorage.setItem("finalScore", JSON.stringify(finalScore));
+  window.location.href = "./highscore.html";
+});
+
 init();
