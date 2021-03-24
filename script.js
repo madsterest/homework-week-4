@@ -10,6 +10,7 @@ var score = 0;
 var time = 60;
 var index = 0;
 
+//Creating all the list elements for the questions and starting them with an attribute of hidden
 var questionLi1 = document.createElement("li");
 listEl.appendChild(questionLi1);
 var questionLi2 = document.createElement("li");
@@ -20,6 +21,7 @@ var questionLi4 = document.createElement("li");
 listEl.appendChild(questionLi4);
 listEl.setAttribute("class", "hidden");
 
+//Object containing all the questions, the answer options and the correct answer
 var questionObj = [
   {
     name: "This is the first question",
@@ -55,9 +57,11 @@ var questionObj = [
 
 function init() {
   index = 0;
-  questionDisplay.innerHTML =
-    "Here is the quiz for how good you are at things. Click the button to start the quiz";
+  questionDisplay.textContent =
+    "Time to test your coding knowledge! Click the button below to start the quiz. The faster you complete it, the better your score. But be warned, if you answer a question wrong, time will be deducted!";
 }
+
+//Created a timer that calls the function every second. Hides the Start button and makes the list elements visible. If the timer is greater than 0, the time will be displayed and count backwards each second. If not, the timer is cleared and the game is over. Same happens if the index is 5 (all the questions have been completed)
 function startTimer() {
   startButton.setAttribute("class", "hidden");
   listEl.removeAttribute("class", "hidden");
@@ -77,8 +81,23 @@ function startTimer() {
     }
   }, 1000);
 }
-
+//Starts the timer with the click of the start button
 startButton.addEventListener("click", startTimer);
+//Generates the question display. The object name (as in the question) is displayed.
+function generateDisplay(index) {
+  questionDisplay.innerHTML = questionObj[index].name;
+  questionLi1.innerHTML = questionObj[index].questions[0];
+  questionLi2.innerHTML = questionObj[index].questions[1];
+  questionLi3.innerHTML = questionObj[index].questions[2];
+  questionLi4.innerHTML = questionObj[index].questions[3];
+  questionLi1.setAttribute("class", "label");
+  questionLi2.setAttribute("class", "label");
+  questionLi3.setAttribute("class", "label");
+  questionLi4.setAttribute("class", "label");
+}
+var answer = questionObj[index].answer;
+
+//Event listener waits for the user to select an answer. It then targets which element was chosen. The index is then changed so that the next question can be displayed
 
 listEl.addEventListener("click", function (event) {
   var userChoice = event.target.innerHTML;
@@ -102,19 +121,7 @@ listEl.addEventListener("click", function (event) {
   }
 });
 
-function generateDisplay(index) {
-  questionDisplay.innerHTML = questionObj[index].name;
-  questionLi1.innerHTML = questionObj[index].questions[0];
-  questionLi2.innerHTML = questionObj[index].questions[1];
-  questionLi3.innerHTML = questionObj[index].questions[2];
-  questionLi4.innerHTML = questionObj[index].questions[3];
-  questionLi1.setAttribute("class", "label");
-  questionLi2.setAttribute("class", "label");
-  questionLi3.setAttribute("class", "label");
-  questionLi4.setAttribute("class", "label");
-}
-var answer = questionObj[index].answer;
-
+//Hides the questions and shows a form for the user to input their initials. Sets the score to the time left by the timer.
 function testOver() {
   score = time;
   timeDisplay.textContent = score;
@@ -122,8 +129,12 @@ function testOver() {
   questionDisplay.setAttribute("class", "hidden");
   scoreInput.removeAttribute("class", "hidden");
 }
+//Ensures the user puts an input. Saves the score with the users initials
 saveButton.addEventListener("click", function (event) {
   event.preventDefault();
+  if (initials.value === "") {
+    return;
+  }
 
   var finalScore = {
     initials: initials.value.trim().toUpperCase(),
@@ -132,5 +143,6 @@ saveButton.addEventListener("click", function (event) {
   localStorage.setItem("finalScore", JSON.stringify(finalScore));
   window.location.href = "./highscore.html";
 });
+//Resets the initial display of the game
 
 init();
