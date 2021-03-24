@@ -1,11 +1,15 @@
 var startButton = document.querySelector(".start");
+startButton.setAttribute("class", "pointer");
 var questionDisplay = document.querySelector("p");
 var listEl = document.querySelector(".question-list");
 var timeDisplay = document.querySelector(".time-display");
 var scoreInput = document.querySelector("form");
 var initials = document.getElementById("initials");
 var saveButton = document.getElementById("save");
+saveButton.setAttribute("class", "pointer");
 var answerDisplay = document.getElementById("answer-display");
+var highscoreBtn = document.querySelector(".highscore-link");
+highscoreBtn.setAttribute("class", "pointer");
 var score = 0;
 var time = 60;
 var index = 0;
@@ -24,34 +28,44 @@ listEl.setAttribute("class", "hidden");
 //Object containing all the questions, the answer options and the correct answer
 var questionObj = [
   {
-    name: "This is the first question",
+    name: "Which of the following has a truthy value?",
+    questions: ["1. undefined", "2. 0", "3. False", "4. 'zero'"],
+    answer: "4. 'zero'",
+  },
+  {
+    name: "What of the following is a function declaration?",
     questions: [
-      "This is answer 1",
-      "This is answer 2",
-      "This is answer 3",
-      "This is answer 4",
+      "1. var doThis = function () {}",
+      "2. function doThis() {}",
+      "3. var doThis = 'function'",
+      "4. var doThis = () => {}",
     ],
-    answer: "This is answer 4",
+    answer: "2. function doThis() {}",
   },
   {
-    name: "This is the second question",
-    questions: ["answer2.1", "answer2.2", "answer2.3", "answer2.4"],
-    answer: "answer2.1",
+    name: "What is the right format for a CSS class selector?",
+    questions: [
+      "1. 'this-class'",
+      "2. .this-class",
+      "3. thisClass",
+      "4. #this-class",
+    ],
+    answer: "2. .this-class",
   },
   {
-    name: "This is the third question",
-    questions: ["answer3.1", "answer3.2", "answer3.3", "answer3.4"],
-    answer: "answer3.2",
+    name: "What is the right format for an array? ",
+    questions: [
+      "1. var myArray = {arr1, arr2}",
+      "2. var myArray = 'arr1, arr2'",
+      "3. var myArray = ['arr1', 'arr2']",
+      "4. var myArray = [arr1, arr2]",
+    ],
+    answer: "3. var myArray = ['arr1', 'arr2']",
   },
   {
-    name: "This is the fourth question",
-    questions: ["answer4.1", "answer4.2", "answer4.3", "answer4.4"],
-    answer: "answer3.2",
-  },
-  {
-    name: "This is the Fifth question",
-    questions: ["answer5.1", "answer5.2", "answer5.3", "answer5.4"],
-    answer: "answer3.2",
+    name: "What symbol is used for string concatenation?",
+    questions: ["1. +", "2. *", "3. =", "4. >"],
+    answer: "1. +",
   },
 ];
 
@@ -95,12 +109,12 @@ function generateDisplay(index) {
   questionLi3.setAttribute("class", "label");
   questionLi4.setAttribute("class", "label");
 }
-var answer = questionObj[index].answer;
 
 //Event listener waits for the user to select an answer. It then targets which element was chosen. The index is then changed so that the next question can be displayed
 
 listEl.addEventListener("click", function (event) {
   var userChoice = event.target.innerHTML;
+  var answer = questionObj[index].answer;
 
   if (userChoice === answer && index <= 3) {
     answerDisplay.innerHTML = "Correct";
@@ -144,5 +158,10 @@ saveButton.addEventListener("click", function (event) {
   window.location.href = "./highscore.html";
 });
 //Resets the initial display of the game
-
+highscoreBtn.addEventListener("click", function () {
+  if (initials.value === "") {
+    return;
+  }
+  window.location.href = "./highscore.html";
+});
 init();

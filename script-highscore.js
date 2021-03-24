@@ -1,7 +1,8 @@
 var backButton = document.querySelector(".back-btn");
+backButton.setAttribute("class", "pointer");
 var clearButton = document.querySelector(".clear-button");
+clearButton.setAttribute("class", "pointer");
 var highscoreEl = document.querySelector(".highscore-list");
-var currentScore = JSON.parse(localStorage.getItem("finalScore"));
 var scores = [];
 
 //Gets the saved scores from the local storage. If there are no previous scores, the function doesn't run. Otherwise the saved scores get added to the empty scores array.
@@ -14,6 +15,7 @@ function init() {
 }
 //Adds the most recent score to the score array
 function addScore() {
+  var currentScore = JSON.parse(localStorage.getItem("finalScore"));
   scores.push(currentScore);
   renderScore();
   storeScores();
