@@ -84,22 +84,18 @@ listEl.addEventListener("click", function (event) {
   var userChoice = event.target.innerHTML;
 
   if (userChoice === answer && index <= 3) {
-    console.log("YAY");
     answerDisplay.innerHTML = "Correct";
     index++;
     generateDisplay(index);
   } else if (userChoice !== answer && index <= 3) {
-    console.log("NOPE");
     answerDisplay.innerHTML = "Wrong Answer";
     time = time - 5;
     index++;
     generateDisplay(index);
   } else if (userChoice === answer && index >= 4) {
-    console.log("YAY");
     answerDisplay.innerHTML = "Correct";
     index++;
   } else if (userChoice !== answer && index >= 4) {
-    console.log("NOPE");
     answerDisplay.innerHTML = "Wrong Answer";
     time = time - 5;
     index++;
@@ -112,6 +108,10 @@ function generateDisplay(index) {
   questionLi2.innerHTML = questionObj[index].questions[1];
   questionLi3.innerHTML = questionObj[index].questions[2];
   questionLi4.innerHTML = questionObj[index].questions[3];
+  questionLi1.setAttribute("class", "label");
+  questionLi2.setAttribute("class", "label");
+  questionLi3.setAttribute("class", "label");
+  questionLi4.setAttribute("class", "label");
 }
 var answer = questionObj[index].answer;
 
@@ -121,13 +121,12 @@ function testOver() {
   listEl.setAttribute("class", "hidden");
   questionDisplay.setAttribute("class", "hidden");
   scoreInput.removeAttribute("class", "hidden");
-  console.log(score);
 }
 saveButton.addEventListener("click", function (event) {
   event.preventDefault();
 
   var finalScore = {
-    initials: initials.value.trim(),
+    initials: initials.value.trim().toUpperCase(),
     finalScore: score,
   };
   localStorage.setItem("finalScore", JSON.stringify(finalScore));

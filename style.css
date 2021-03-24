@@ -18,23 +18,39 @@ main {
   position: absolute;
   left: 200px;
 }
-form {
-  display: flex;
-  flex-direction: column;
+
+.label {
+  border: 1px solid navy;
+  border-radius: 10px;
+  margin: 2%;
+  padding: 1%;
+  width: 250px;
 }
+
 .hidden {
   display: none;
 }
-.label {
-  display: inline-block;
+.form {
+  width: 250px;
+}
+
+.question-list li {
   border: 1px solid navy;
   border-radius: 10px;
-  margin: 1%;
-  width: 300px;
-  height: 40px;
-  padding: 5px 10px;
-  font-size: 120%;
 }
-.radio:checked + .label {
+.highscore-list {
+  padding: 0px;
+}
+.highscore-list li {
+  list-style: none;
+  border: 1px solid navy;
+  width: 200px;
+  margin: 2% auto;
+}
+
+.label:hover {
   background-color: lightskyblue;
+}
+.highscore-main {
+  text-align: center;
 }
