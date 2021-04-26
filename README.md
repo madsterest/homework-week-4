@@ -11,7 +11,7 @@ Set Interval function for timer
 
 URL: https://madsterest.github.io/timed-coding-challenge/
 
-![Website Screenshot](./assetswebsite-screenshot.png)
+![Website Screenshot](./assets/website-screenshot.png)
 
 
 
