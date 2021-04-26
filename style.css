@@ -26,11 +26,11 @@ main {
   max-width: 1000px;
   text-align: center;
 }
+
 .start {
   left: 200px;
   width: 200px;
 }
-
 .label {
   list-style: none;
   font-size: 110%;
@@ -67,4 +67,7 @@ main {
 }
 .pointer {
   cursor: pointer;
+}
+.highscore-link {
+  text-decoration: underline;
 }
