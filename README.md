@@ -24,3 +24,5 @@ URL: https://madsterest.github.io/timed-coding-challenge/
 
 
 
+Contact me for any questions or concerns:
+Email: odea.madeleine@gmail.com
